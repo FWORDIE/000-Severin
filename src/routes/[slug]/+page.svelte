@@ -34,7 +34,6 @@
         pageX = e.clientX;
         pageY = e.clientY
         let box = window.getBoundingClientRect()
-        console.log(e.clientX , box.width - box.width/4)
         if(e.clientX < box.width/4 && e.clientY > box.height/8){
             mouseText = 'prev'
             return
@@ -87,6 +86,7 @@
         z-index: 99;
         transition: all 100ms;
         transform: translate(-50%, -50%);
+        margin: 0px;
     }
 
     .invisable{

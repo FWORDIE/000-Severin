@@ -39,7 +39,7 @@
         min-height: 100dvh;
         flex-direction: column;
         h1{
-            margin: 0px;
+            margin: var(--halfPadding);
             z-index: 2;
 
         }
