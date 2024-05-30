@@ -1,9 +1,12 @@
 <script lang="ts">
 	import '$lib/scss/global.scss';
+    import { siteName } from '$lib/store/store.js';
     import type { SiteConfig } from '$lib/types/types';
     export let data;
 
     let siteConfig:SiteConfig = data.data.siteConfig
+
+    $: $siteName = siteConfig.title
 </script>
 <main style="
 --bgColour:{siteConfig.defaultBgColour.hex};
