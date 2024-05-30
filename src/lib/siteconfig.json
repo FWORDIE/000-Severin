@@ -1,0 +1,17 @@
+[{
+    "data": {
+      "siteConfig": {
+        "title": "Severin's Albums",
+        "backLink": "https://www.fredwordie.com/",
+        "defaultBgColour": {
+          "hex": "#3E3838"
+        },
+        "defaultTxtColour": {
+          "hex": "#F8F2F2"
+        },
+        "defaultHlColour": {
+          "hex": "#E87E7E"
+        }
+      }
+    }
+  }]

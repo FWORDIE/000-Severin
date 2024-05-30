@@ -3,11 +3,13 @@ export interface datocmsdata {
 }
 
 export interface alldatodata {
-   data:Data2;
+    data: Data2;
 }
 
 export interface Data2 {
     allAlbums: Album[];
+    siteConfig: SiteConfig;
+
 }
 
 export interface Data {
@@ -15,28 +17,51 @@ export interface Data {
 }
 
 export interface Album {
-    id:                string;
-    title:             string;
-    _status:           string;
+    id: string;
+    title: string;
+    _status: string;
     _firstPublishedAt: Date;
-    pictures:          Picture[];
+    pictures: Picture[];
+    date: string;
+    description: string;
+    location: string;
 }
 
 export interface Picture {
-    alt:             null;
+    alt: null;
     responsiveImage: ResponsiveImage;
 }
 
 export interface ResponsiveImage {
-    alt:         null;
-    base64:      string;
+    alt: null;
+    base64: string;
     aspectRatio: number;
-    bgColor:     string;
-    height:      number;
-    sizes:       string;
-    src:         string;
-    srcSet:      string;
-    title:       null;
-    webpSrcSet:  string;
-    width:       number;
+    bgColor: string;
+    height: number;
+    sizes: string;
+    src: string;
+    srcSet: string;
+    title: null;
+    webpSrcSet: string;
+    width: number;
+}
+
+export interface Siteconfig {
+    data: Data3;
+}
+
+export interface Data3 {
+    siteConfig: SiteConfig;
+}
+
+export interface SiteConfig {
+    title:            string;
+    backLink:         string;
+    defaultBgColour:  DefaultColour;
+    defaultTxtColour: DefaultColour;
+    defaultHlColour:  DefaultColour;
+}
+
+export interface DefaultColour {
+    hex: string;
 }

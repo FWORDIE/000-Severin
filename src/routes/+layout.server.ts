@@ -3,28 +3,6 @@ import {datoToken} from "$env/static/private";
 export async function load({ params }) {
     const query = `
         query {
-            allAlbums {
-              id
-              title
-              _status
-              _firstPublishedAt
-              pictures {
-                alt
-                responsiveImage {
-                  alt
-                  base64
-                  aspectRatio
-                  bgColor
-                  height
-                  sizes
-                  src
-                  srcSet
-                  title
-                  webpSrcSet
-                  width
-                }
-              }
-            }
             siteConfig {
                 title
                 backLink

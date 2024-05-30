@@ -6,6 +6,9 @@ export async function load({ params }) {
             album(filter: {title: {eq: "${params.slug}"}}) {
               id
               title
+              date
+              description
+              location
               _status
               _firstPublishedAt
               pictures {

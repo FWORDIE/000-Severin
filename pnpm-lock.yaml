@@ -8,6 +8,9 @@ dependencies:
   '@datocms/svelte':
     specifier: ^2.0.3
     version: 2.0.3(svelte@4.2.17)
+  invert-color:
+    specifier: ^2.0.0
+    version: 2.0.0
   sass:
     specifier: ^1.77.2
     version: 1.77.2
@@ -812,6 +815,10 @@ packages:
   /inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: true
+
+  /invert-color@2.0.0:
+    resolution: {integrity: sha512-9s6IATlhOAr0/0MPUpLdMpk81ixIu8IqwPwORssXBauFT/4ff/iyEOcojd0UYuPwkDbJvL1+blIZGhqVIaAm5Q==}
+    dev: false
 
   /is-binary-path@2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}

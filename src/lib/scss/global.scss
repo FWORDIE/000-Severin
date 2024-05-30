@@ -1,5 +1,5 @@
 :root {
-	font-family: 'Helvetica';
+	font-family: 'CothamSans';
 	box-sizing: border-box;
 	text-decoration: none;
 	padding: 0px;
@@ -38,10 +38,18 @@ html,body {
     margin: 0px;
     padding: 0px;
     font-size: var(--baseFont);
-    background-color: var(--black);
+    background-color: var(--bgColour);
     max-width: 100dvw;
     max-height: 100dvh;
     overflow: hidden;
-    color: var(--white);
+    color: var(--txtColour);
 
+}
+
+@font-face {
+	font-family: 'CothamSans';
+	src: url('./CothamSans.woff2') format('woff2');
+	font-display: auto;
+	font-weight: 400;
+	font-stretch: normal;
 }

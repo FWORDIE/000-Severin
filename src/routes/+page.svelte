@@ -1,10 +1,13 @@
 <script lang="ts">
     import ImageArea from "$lib/comps/imageArea.svelte";
+    import { getTxt } from "$lib/funcs";
     import type { alldatodata, datocmsdata } from "$lib/types/types";
     import { Image } from "@datocms/svelte";
 
     export let data: alldatodata;
     $: albumIndex = -1;
+
+    $: txtColour = albumIndex >= 0 ? getTxt(data.data.allAlbums[albumIndex].pictures[0].responsiveImage.bgColor) : data.data.siteConfig.defaultTxtColour.hex;
 
     const background = (i: number) => {
         albumIndex = i;
@@ -14,50 +17,56 @@
     };
 </script>
 
-<!-- {JSON.stringify(data.data)} -->
-<div class="homescreen">
+<div
+    class="homescreen"
+    style="--bgColour:{albumIndex >= 0
+        ? data.data.allAlbums[albumIndex].pictures[0].responsiveImage.bgColor
+        : data.data.siteConfig.defaultBgColour.hex}; --txtColour:{txtColour};"
+>
     <div class="list">
-        <h1>severin's albums</h1>
+        <h1>{data.data.siteConfig.title}</h1>
         {#each data.data.allAlbums as album, index}
             <a href="/{album.title}" on:mouseenter={() => background(index)} on:mouseleave={hideBackground}> <h1>/{album.title}</h1></a>
         {/each}
 
-        <a href="https://www.fredwordie.com/"><h1>...back</h1></a>
+        <a class='back' href={data.data.siteConfig.backLink}><h1>...back</h1></a>
     </div>
     {#if albumIndex >= 0}
-    <div class="imageBackground">
-        <ImageArea ImageData={data.data.allAlbums[albumIndex].pictures[0]}></ImageArea>
-    </div>
-{/if}
+        <div class="imageBackground">
+            <ImageArea ImageData={data.data.allAlbums[albumIndex].pictures[0]} bgColour={true}></ImageArea>
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
     .homescreen {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: left;
+        justify-content: top;
         min-height: 100dvh;
         flex-direction: column;
-        h1{
+        color: var(--txtColour);
+        background-color: var(--bgColour);
+        h1 {
             margin: var(--halfPadding);
             z-index: 2;
-
         }
-        .list{
+        .list {
             display: flex;
             flex-direction: column;
-
+            margin: var(--padding);
+            align-items: flex-start;
         }
         a {
             z-index: 2;
-            color: var(--white);
+            color: var(--txtColour);
             text-decoration: none;
             h1 {
                 color: inherit;
             }
         }
-        a:hover {
-            color: var(--green);
+        a.back:hover {
+            color: var(--hlColour);
         }
         .imageBackground {
             height: 100dvh;
