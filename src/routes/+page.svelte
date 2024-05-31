@@ -60,8 +60,9 @@
         color: var(--txtColour);
         background-color: var(--bgColour);
         cursor: none;
+        gap: var(--padding);
         h1 {
-            margin: var(--halfPadding);
+            margin-bottom: var(--halfPadding);
             z-index: 2;
         }
         .list {
