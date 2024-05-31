@@ -3,7 +3,7 @@ import {datoToken} from "$env/static/private";
 export async function load({ params }) {
     const query = `
         query {
-            allAlbums {
+            allAlbums (orderBy: date_DESC) {
               id
               title
               _status
