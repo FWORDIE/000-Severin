@@ -126,10 +126,10 @@
         </div>
     </div>
     {#if data}
-        {#key data.data.album.pictures[$imageNum].responsiveImage.bgColor}
+        <!-- {#key data.data.album.pictures[$imageNum].responsiveImage.bgColor} -->
             <!-- {JSON.stringify(picture.responsiveImage)} -->
             <ImageArea ImageData={data.data.album.pictures[$imageNum]} bgColour={!bgImage}></ImageArea>
-        {/key}
+        <!-- {/key} -->
     {/if}
     {#if mouseText === "back"}
         <div class="info" >
