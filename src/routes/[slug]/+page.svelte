@@ -8,6 +8,7 @@
     import { random, getTxt } from "$lib/funcs";
 
     import moment from "moment";
+    import { info } from "sass";
 
     let pageX = 0;
     let pageY = 0;
@@ -18,15 +19,13 @@
 
     let mouseText = "";
 
-    $: txtColour = data.data.album.pictures[$imageNum] ? getTxt(data.data.album.pictures[$imageNum].responsiveImage.bgColor) : '';
+    $: txtColour = data.data.album.pictures[$imageNum] ? getTxt(data.data.album.pictures[$imageNum].responsiveImage.bgColor) : "";
 
     var bgImage = true;
 
     onMount(() => {
         $imageNum = Math.floor(random(0, numOfPictures));
     });
-
-
 
     const next = () => {
         console.log($imageNum, numOfPictures);
@@ -55,11 +54,11 @@
         bgImage = true;
     };
 
-    const numberFinder = (x:number, width:number) => {
-        const quotient = Math.floor(width/numOfPictures);
-        console.log(width,numOfPictures, Math.floor(width/quotient))
-        return (Math.floor(x/quotient) +1).toString()
-    }
+    const numberFinder = (x: number, width: number) => {
+        const quotient = Math.floor(width / numOfPictures);
+        console.log(width, numOfPictures, Math.floor(width / quotient));
+        return (Math.floor(x / quotient) + 1).toString();
+    };
 
     const mousemovement = (e: MouseEvent) => {
         pageX = e.clientX;
@@ -68,24 +67,25 @@
         if (mouseText == "back") {
             return;
         }
-        if (e.clientX < box.width / 4 && e.clientY > box.height / 8 && e.clientY < box.height -  box.height / 8) {
+        if (e.clientX < box.width / 4 && e.clientY > box.height / 8 && e.clientY < box.height - box.height / 8) {
             mouseText = "prev";
             return;
-        } else if (e.clientX > box.width - box.width / 4 && e.clientY > box.height / 8 && e.clientY < box.height -  box.height / 8) {
+        } else if (e.clientX > box.width - box.width / 4 && e.clientY > box.height / 8 && e.clientY < box.height - box.height / 8) {
             mouseText = "next";
             return;
         } else if (e.clientY < box.height / 8) {
             mouseText = "*";
-            return ;
-        } else if (e.clientY > box.height -  box.height / 8) {
+            return;
+        } else if (e.clientY > box.height - box.height / 8) {
             mouseText = numberFinder(e.clientX, box.width);
-            return ;
+            return;
         }
 
         mouseText = `${$imageNum + 1}/${numOfPictures}`;
         // mouseText = `*`
     };
 
+    let lightBoxed = false;
     const click = () => {
         if (mouseText == "prev") {
             prev();
@@ -96,53 +96,90 @@
         } else if (mouseText == "back") {
             back();
             return;
-        } else if (Number(mouseText)){
-            $imageNum = Number(mouseText)-1
+        } else if (Number(mouseText)) {
+            $imageNum = Number(mouseText) - 1;
+        } else if (mouseText == `${$imageNum + 1}/${numOfPictures}`) {
+            lightBoxed = !lightBoxed;
+        }
+    };
+
+    const handleKey = (event: KeyboardEvent) => {
+        if (event.repeat) return;
+
+        switch (event.key) {
+            case "ArrowRight":
+                next();
+                // By using `preventDefault`, it tells the Browser not to handle the
+                // key stroke for its own shortcuts or text input.
+                event.preventDefault();
+                break;
+
+            case "ArrowLeft":
+                event.preventDefault();
+                prev();
+                break;
+            case "ArrowUp":
+                event.preventDefault();
+                if (mouseText == "back") {
+                    back();
+                }else{
+                    showInfo();
+
+                }
+                break;
+            case "ArrowDown":
+                event.preventDefault();
+                if (mouseText == "back") {
+                    back();
+                } else {
+                    lightBoxed = !lightBoxed;
+                }
+                break;
         }
     };
 </script>
 
-<svelte:window on:mousemove={(e) => mousemovement(e)} />
+<svelte:window on:mousemove={(e) => mousemovement(e)} on:keydown={(e) => handleKey(e)} />
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 {#if data.data.album.pictures[$imageNum]}
-<div
-    class="invisable"
-    bind:this={window}
-    style="--bgColour:{data.data.album.pictures[$imageNum].responsiveImage.bgColor};--txtColour:{txtColour};"
-    on:mousedown={click}
->
-    <h1 class="follow" style="position: absolute; top: {pageY}px; left: {pageX}px">{mouseText}</h1>
-    <div class="headerArea">
-        <div class="left">
-            <h1 on:click={()=>goto('/')} class="hoverer">{$siteName}</h1>
-            <h1>/{data.data.album.title}</h1>
-        </div>
-        <div class="right">
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-            {#if mouseText != "back"}
-                <h1 on:click={showInfo} class="hoverer">info</h1>
-            {/if}
-        </div>
-    </div>
-    {#if data}
-        <!-- {#key data.data.album.pictures[$imageNum].responsiveImage.bgColor} -->
-            <!-- {JSON.stringify(picture.responsiveImage)} -->
-            <ImageArea ImageData={data.data.album.pictures[$imageNum]} bgColour={!bgImage}></ImageArea>
-        <!-- {/key} -->
-    {/if}
-    {#if mouseText === "back"}
-        <div class="info" >
+    <div
+        class="invisable"
+        bind:this={window}
+        style="--bgColour:{data.data.album.pictures[$imageNum].responsiveImage.bgColor};--txtColour:{txtColour};"
+        on:mousedown={click}
+    >
+        <h1 class="follow" style="position: absolute; top: {pageY}px; left: {pageX}px">{mouseText}</h1>
+        <div class="headerArea">
             <div class="left">
-                <h1 on:click={()=>goto('/')} class="hoverer">{$siteName}</h1>
+                <h1 on:click={() => goto("/")} class="hoverer">{$siteName}</h1>
                 <h1>/{data.data.album.title}</h1>
             </div>
-            <h1>{moment(data.data.album.date).format("MMMM YY")}</h1>
-            <h1>{data.data.album.location}</h1>
-            <h1>{data.data.album.description}</h1>
+            <div class="right">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                {#if mouseText != "back"}
+                    <h1 on:click={showInfo} class="hoverer">info</h1>
+                {/if}
+            </div>
         </div>
-    {/if}
-</div>
+        {#if data}
+            <!-- {#key data.data.album.pictures[$imageNum].responsiveImage.bgColor} -->
+            <!-- {JSON.stringify(picture.responsiveImage)} -->
+            <ImageArea ImageData={data.data.album.pictures[$imageNum]} bgColour={!bgImage} {lightBoxed}></ImageArea>
+            <!-- {/key} -->
+        {/if}
+        {#if mouseText === "back"}
+            <div class="info">
+                <div class="left">
+                    <h1 on:click={() => goto("/")} class="hoverer">{$siteName}</h1>
+                    <h1>/{data.data.album.title}</h1>
+                </div>
+                <h1>{moment(data.data.album.date).format("MMMM YY")}</h1>
+                <h1>{data.data.album.location}</h1>
+                <h1 class='desc'>{data.data.album.description}</h1>
+            </div>
+        {/if}
+    </div>
 {/if}
 
 <style lang="scss">
@@ -152,6 +189,11 @@
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none;
         z-index: 99;
+
+        &.desc{
+            white-space: pre-wrap;
+            margin-right: var(--padding);
+        }
     }
 
     .follow {
@@ -189,7 +231,7 @@
         cursor: none;
     }
     .info {
-        position: fixed;
+        position: absolute;
         top: var(--padding);
         left: var(--padding);
         z-index: 11;
@@ -198,6 +240,8 @@
         display: flex;
         gap: var(--halfPadding);
         flex-direction: column;
+        overflow: auto;
+        background-color: var(--bgColour);
     }
 
     button {

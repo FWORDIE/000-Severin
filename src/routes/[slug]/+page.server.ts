@@ -13,6 +13,10 @@ export async function load({ params }) {
               _firstPublishedAt
               pictures {
                 alt
+                focalPoint {
+                    x
+                    y
+                  }
                 responsiveImage {
                   alt
                   base64
