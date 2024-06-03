@@ -135,9 +135,9 @@
         }
     };
 
-    $: styles = colourFunc($imageNum, mouseText, lightBoxed);
+    $: styles = colourFunc($imageNum, mouseText, lightBoxed, $forcedColours);
 
-    const colourFunc = (imageNum: number, mouseText: string, lightBoxed: boolean) => {
+    const colourFunc = (imageNum: number, mouseText: string, lightBoxed: boolean, forcedColour = true) => {
         var pageBgColour = "var(--defaultBgColour)";
         var pageTxtColour = "var(--defaultTxtColour)";
         var pageLinkColour = "var(--defaultHlColour)";

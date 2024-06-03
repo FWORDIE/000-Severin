@@ -8,7 +8,23 @@
 
     $: $siteName = siteConfig.title
     $: $forcedColours  =siteConfig.strictColours
+    const handleKey = (event: KeyboardEvent) => {
+        if (event.repeat) return;
+
+        switch (event.key) {
+            case "c":
+                $forcedColours = !$forcedColours
+                // By using `preventDefault`, it tells the Browser not to handle the
+                // key stroke for its own shortcuts or text input.
+                event.preventDefault();
+                break;
+
+
+        }
+    };
 </script>
+<svelte:window on:keydown={(e) => handleKey(e)} />
+
 <main class:forced={siteConfig.strictColours} style="
 --bgColour:{siteConfig.defaultBgColour.hex};
 --txtColour:{siteConfig.defaultTxtColour.hex};
