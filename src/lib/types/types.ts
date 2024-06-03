@@ -60,6 +60,7 @@ export interface SiteConfig {
     defaultBgColour:  DefaultColour;
     defaultTxtColour: DefaultColour;
     defaultHlColour:  DefaultColour;
+    strictColours: boolean;
 }
 
 export interface DefaultColour {

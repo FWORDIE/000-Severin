@@ -15,6 +15,7 @@ export async function load({ params }) {
                     defaultHlColour {
                   hex
                 }
+                strictColours
               }
           }
     `;

@@ -1,40 +1,39 @@
 :root {
-	font-family: 'CothamSans';
-	box-sizing: border-box;
-	text-decoration: none;
-	padding: 0px;
-	margin: 0px;
-	font-size: 16px;
-	color: var(--black);
-	--padding: var(--baseFont);
-	--halfPadding: calc(0.5 * var(--padding));
-	--quatPadding: calc(0.25 * var(--padding));
-	--largePadding: calc(2 * var(--padding));
-	--extraLargePadding: calc(3 * var(--padding));
+    font-family: "CothamSans";
+    box-sizing: border-box;
+    text-decoration: none;
+    padding: 0px;
+    margin: 0px;
+    font-size: 16px;
+    color: var(--black);
+    --padding: var(--baseFont);
+    --halfPadding: calc(0.5 * var(--padding));
+    --quatPadding: calc(0.25 * var(--padding));
+    --largePadding: calc(2 * var(--padding));
+    --extraLargePadding: calc(3 * var(--padding));
     --extraextraLargePadding: calc(4 * var(--padding));
-	--radius: var(--padding);
-	--white: #fffcf4;
-	--black: #232121;
-	--orange: #F97A32;
-	--green: #3FFF53;
-    --red: #F93232;
-	--font-size-xsm: clamp(0.56rem, 0.18vw + 0.52rem, 0.74rem);
-	--font-size-sm: clamp(0.7rem, 0.26vw + 0.63rem, 0.96rem);
-	--font-size-base: clamp(0.88rem, 0.38vw + 0.78rem, 1.25rem);
-	--font-size-md: clamp(1.09rem, 0.53vw + 0.96rem, 1.63rem);
-	--font-size-lg: clamp(1.37rem, 0.75vw + 1.18rem, 2.11rem);
-	--font-size-xl: clamp(1.71rem, 1.04vw + 1.45rem, 2.75rem);
-	--font-size-xxl: clamp(2.14rem, 1.43vw + 1.78rem, 3.57rem);
-	--font-size-xxxl: clamp(2.67rem, 1.97vw + 2.18rem, 4.64rem);
-	--baseFont: var(--font-size-base);
+    --radius: var(--padding);
+    --white: #fffcf4;
+    --black: #232121;
+    --orange: #f97a32;
+    --green: #3fff53;
+    --red: #f93232;
+    --font-size-xsm: clamp(0.56rem, 0.18vw + 0.52rem, 0.74rem);
+    --font-size-sm: clamp(0.7rem, 0.26vw + 0.63rem, 0.96rem);
+    --font-size-base: clamp(0.88rem, 0.38vw + 0.78rem, 1.25rem);
+    --font-size-md: clamp(1.09rem, 0.53vw + 0.96rem, 1.63rem);
+    --font-size-lg: clamp(1.37rem, 0.75vw + 1.18rem, 2.11rem);
+    --font-size-xl: clamp(1.71rem, 1.04vw + 1.45rem, 2.75rem);
+    --font-size-xxl: clamp(2.14rem, 1.43vw + 1.78rem, 3.57rem);
+    --font-size-xxxl: clamp(2.67rem, 1.97vw + 2.18rem, 4.64rem);
+    --baseFont: var(--font-size-base);
 
-	--majorBorder: solid calc(0.4 * var(--extraSmallFont)) var(--black);
-	--minorBorder: solid calc(0.2 * var(--extraSmallFont)) var(--black);
-    --max-width:600px;
-    
-
+    --majorBorder: solid calc(0.4 * var(--extraSmallFont)) var(--black);
+    --minorBorder: solid calc(0.2 * var(--extraSmallFont)) var(--black);
+    --max-width: 600px;
 }
-html,body {
+html,
+body {
     margin: 0px;
     padding: 0px;
     font-size: var(--baseFont);
@@ -43,41 +42,55 @@ html,body {
     max-height: 100dvh;
     overflow: hidden;
     color: var(--txtColour);
-
 }
 
 @font-face {
-	font-family: 'CothamSans';
-	src: url('./CothamSans.woff2') format('woff2');
-	font-display: auto;
-	font-weight: 400;
-	font-stretch: normal;
+    font-family: "CothamSans";
+    src: url("./CothamSans.woff2") format("woff2");
+    font-display: auto;
+    font-weight: 400;
+    font-stretch: normal;
 }
 
-h1{
+h1 {
     margin: 0px;
     padding: 0px;
+    font-size: var(--baseFont);
 }
 
-.hoverer{
+.hoverer {
+    margin: calc(-1 * var(--quatPadding));
+    margin-top: calc(-1.25 * var(--quatPadding));
+    margin-bottom: calc(-0.5 * var(--quatPadding));
 
-    &:hover{
-        text-decoration: underline calc(0.2 * var(--padding));
+    padding: calc(1 * var(--quatPadding));
+    padding-top: calc(1.25 * var(--quatPadding));
+    padding-bottom: calc(0.5 * var(--quatPadding));
+    &:hover {
+        color: var(--hoverColourTxt);
+        background-color: var(--hoverColourBg);
+        // text-decoration: underline calc(0.1 * var(--padding));
     }
 }
 
 *::-webkit-scrollbar {
-	width: var(--quatPadding);
+    width: var(--quatPadding);
 }
 * {
-	scrollbar-width: thin;
-	scrollbar-color: var(--txtColour) var(--bgColour);
+    scrollbar-width: thin;
+    scrollbar-color: var(--txtColour) var(--bgColour);
 }
 *::-webkit-scrollbar-track {
-	background: var(--bgColour);
+    background: var(--bgColour);
 }
 *::-webkit-scrollbar-thumb {
-	background-color: var(--txtColour);
-	border-radius: 6px;
-	border: 1px solid var(--bgColour);
+    background-color: var(--txtColour);
+    border-radius: 6px;
+    border: 1px solid var(--bgColour);
+}
+
+
+.follow {
+
+    color: var(--pageLinkColour);
 }

@@ -13,10 +13,10 @@ export const getTxt = (imageHex: string) => {
         .getAll({
             color: invert(imageHex),
             minHueDiff: 0,
-            maxHueDiff: 10,
-            stepHue: 5,
-            minSaturation: 0.4,
-            maxSaturation: 1,
+            maxHueDiff: 359,
+            stepHue: 15,
+            minSaturation: 0,
+            maxSaturation: 0.01,
             stepSaturation: 0.05,
             minLightness: 0,
             maxLightness: 1.001,
@@ -24,11 +24,22 @@ export const getTxt = (imageHex: string) => {
         })
         .pluck({
             color: imageHex,
-            minContrast: 4,
+            minContrast: 5,
         })
         .sortBy("s")
         .getHexArray();
-
-    let colour = colours[Math.floor(random(0, colours.length))];
+    
+        console.log(colours)
+    let colour = colours[0];
     return colour;
 };
+
+
+export const pickTextColorBasedOnBgColorSimple = (bgColor:string , lightColor = '#ffffff', darkColor = '#000000') =>{
+    var color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
+    var r = parseInt(color.substring(0, 2), 16); // hexToR
+    var g = parseInt(color.substring(2, 4), 16); // hexToG
+    var b = parseInt(color.substring(4, 6), 16); // hexToB
+    return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 186) ?
+      darkColor : lightColor;
+  }

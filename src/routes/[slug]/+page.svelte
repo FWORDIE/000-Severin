@@ -1,11 +1,11 @@
 <script lang="ts">
     import ImageArea from "$lib/comps/imageArea.svelte";
     import type { datocmsdata } from "$lib/types/types";
-    import { imageNum, siteName } from "$lib/store/store";
+    import { imageNum, siteName, forcedColours } from "$lib/store/store";
     import { goto } from "$app/navigation";
     export let data: datocmsdata;
     import { afterUpdate, beforeUpdate, onMount } from "svelte";
-    import { random, getTxt } from "$lib/funcs";
+    import { random, getTxt, pickTextColorBasedOnBgColorSimple } from "$lib/funcs";
 
     import moment from "moment";
     import { info } from "sass";
@@ -19,7 +19,7 @@
 
     let mouseText = "";
 
-    $: txtColour = data.data.album.pictures[$imageNum] ? getTxt(data.data.album.pictures[$imageNum].responsiveImage.bgColor) : "";
+    $: txtColour = data.data.album.pictures[$imageNum] ? pickTextColorBasedOnBgColorSimple(data.data.album.pictures[$imageNum].responsiveImage.bgColor) : "";
 
     var bgImage = true;
 
@@ -28,7 +28,6 @@
     });
 
     const next = () => {
-        console.log($imageNum, numOfPictures);
         if ($imageNum < numOfPictures - 1) {
             $imageNum += 1;
         } else {
@@ -80,7 +79,6 @@
             mouseText = numberFinder(e.clientX, box.width);
             return;
         }
-
         mouseText = `${$imageNum + 1}/${numOfPictures}`;
         // mouseText = `*`
     };
@@ -122,9 +120,8 @@
                 event.preventDefault();
                 if (mouseText == "back") {
                     back();
-                }else{
+                } else {
                     showInfo();
-
                 }
                 break;
             case "ArrowDown":
@@ -137,22 +134,52 @@
                 break;
         }
     };
+
+    $: styles = colourFunc($imageNum, mouseText, lightBoxed);
+
+    const colourFunc = (imageNum: number, mouseText: string, lightBoxed: boolean) => {
+        var pageBgColour = "var(--defaultBgColour)";
+        var pageTxtColour = "var(--defaultTxtColour)";
+        var pageLinkColour = "var(--defaultHlColour)";
+        var pageLinkColourHover = "var(--defaultBgColour)";
+        var pageLinkColourBgHover = "var(--defaultHlColour)";
+        if ($forcedColours) {
+            return `
+        --pageBgColour: ${pageBgColour};
+        --pageTxtColour: ${pageTxtColour};
+        --pageLinkColour: ${pageLinkColour};
+        --pageLinkColourHover: ${pageLinkColourHover};
+        --pageLinkColourBgHover: ${pageLinkColourBgHover};
+        `;
+        }
+        const imageColour =  data.data.album.pictures[$imageNum] ? data.data.album.pictures[$imageNum].responsiveImage.bgColor : '#fff'
+        pageLinkColour = lightBoxed || mouseText == 'back' ? imageColour : pickTextColorBasedOnBgColorSimple(imageColour) ;
+        pageBgColour = pickTextColorBasedOnBgColorSimple(imageColour);
+        pageTxtColour = pickTextColorBasedOnBgColorSimple(pickTextColorBasedOnBgColorSimple(imageColour));
+        pageLinkColourBgHover = lightBoxed || mouseText == 'back' ?  imageColour : pickTextColorBasedOnBgColorSimple(imageColour) ;
+        pageLinkColourHover= lightBoxed || mouseText == 'back' ?  pickTextColorBasedOnBgColorSimple(imageColour):imageColour  ;
+        return `
+        --pageBgColour: ${pageBgColour};
+        --pageTxtColour: ${pageTxtColour};
+        --pageLinkColour: ${pageLinkColour};
+        --pageLinkColourHover: ${pageLinkColourHover};
+        --pageLinkColourBgHover: ${pageLinkColourBgHover};
+        `;
+    };
 </script>
 
 <svelte:window on:mousemove={(e) => mousemovement(e)} on:keydown={(e) => handleKey(e)} />
+<svelte:head>
+    <title>{data.data.album.title}</title>
+</svelte:head>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 {#if data.data.album.pictures[$imageNum]}
-    <div
-        class="invisable"
-        bind:this={window}
-        style="--bgColour:{data.data.album.pictures[$imageNum].responsiveImage.bgColor};--txtColour:{txtColour};"
-        on:mousedown={click}
-    >
-        <h1 class="follow" style="position: absolute; top: {pageY}px; left: {pageX}px">{mouseText}</h1>
+    <div class="invisable" bind:this={window} style={styles} on:mousedown={click}>
+        <h1 class="follow" style="position: absolute; top: {pageY}px; left: {pageX}px;">{mouseText}</h1>
         <div class="headerArea">
             <div class="left">
                 <h1 on:click={() => goto("/")} class="hoverer">{$siteName}</h1>
-                <h1>/{data.data.album.title}</h1>
+                <!-- <h1>/{data.data.album.title}</h1> -->
             </div>
             <div class="right">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -172,11 +199,11 @@
             <div class="info">
                 <div class="left">
                     <h1 on:click={() => goto("/")} class="hoverer">{$siteName}</h1>
-                    <h1>/{data.data.album.title}</h1>
+                    <!-- <h1>/{data.data.album.title}</h1> -->
                 </div>
-                <h1>{moment(data.data.album.date).format("MMMM YY")}</h1>
-                <h1>{data.data.album.location}</h1>
-                <h1 class='desc'>{data.data.album.description}</h1>
+                <h1 class="desc">{moment(data.data.album.date).format("MMMM YY")}</h1>
+                <h1 class="desc">{data.data.album.location}</h1>
+                <h1 class="desc">{data.data.album.description}</h1>
             </div>
         {/if}
     </div>
@@ -184,27 +211,33 @@
 
 <style lang="scss">
     h1 {
-        color: var(--txtColour);
+        color: var(--pageTxtColour);
         -webkit-user-select: none; /* Safari */
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none;
         z-index: 99;
 
-        &.desc{
+        &.desc {
             white-space: pre-wrap;
             margin-right: var(--padding);
         }
     }
-
     .follow {
-        transition: all 100ms;
-        transform: translate(-50%, -50%);
-        margin: 0px;
-        pointer-events: none;
+
+        color: var(--pageLinkColour);
     }
+
     .left {
         display: flex;
         justify-content: flex-start;
+        h1 {
+            color: var(--pageLinkColour);
+
+            &:hover {
+                background-color: var(--pageLinkColourBgHover);
+                color: var(--pageLinkColourHover);
+            }
+        }
         @media only screen and (max-width: 700px) {
             flex-direction: column;
         }
@@ -219,6 +252,14 @@
         justify-content: space-between;
         margin-bottom: var(--largePadding);
 
+        h1 {
+            color: var(--pageLinkColour);
+            &:hover {
+                background-color: var(--pageLinkColourBgHover);
+                color: var(--pageLinkColourHover);
+            }
+        }
+
         @media only screen and (max-width: 700px) {
             flex-direction: column;
         }
@@ -229,11 +270,14 @@
         width: 100%;
         position: absolute;
         cursor: none;
+        background-color: var(--pageBgColour);
     }
     .info {
         position: absolute;
-        top: var(--padding);
-        left: var(--padding);
+        top: 0;
+        left: 0;
+        padding-left: var(--padding);
+        padding-top: var(--padding);
         z-index: 11;
         max-width: calc(100dvw - var(--largePadding));
         max-height: calc(100dvh - var(--largePadding));
@@ -241,7 +285,7 @@
         gap: var(--halfPadding);
         flex-direction: column;
         overflow: auto;
-        background-color: var(--bgColour);
+        background-color: var(--pageBgColour);
     }
 
     button {

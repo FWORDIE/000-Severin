@@ -21,7 +21,7 @@
         width: 100dvw;
         height: 100dvh;
         overflow: none;
-        background-color: var(--bgColour);
+        background-color: var(--pageBgColour);
         // position: relative;
         display: flex;
         align-items: center;
