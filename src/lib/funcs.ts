@@ -29,7 +29,6 @@ export const getTxt = (imageHex: string) => {
         .sortBy("s")
         .getHexArray();
     
-        console.log(colours)
     let colour = colours[0];
     return colour;
 };

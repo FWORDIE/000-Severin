@@ -1,4 +1,4 @@
-import {datoToken} from "$env/static/private";
+import { datoToken } from "$env/static/private";
 
 export async function load({ params }) {
     const query = `
@@ -12,9 +12,13 @@ export async function load({ params }) {
                 defaultTxtColour {
                   hex
                 }
-                    defaultHlColour {
+                defaultHlColour {
                   hex
                 }
+                defaultHlTxtColour {
+                    hex
+                }
+                indexBodyText
                 strictColours
               }
           }
@@ -30,9 +34,9 @@ export async function load({ params }) {
     });
     const json = await response.json();
 
-    const returnable = json.data
-
+    const returnable = json.data;
+    console.log(returnable)
     return {
-        data: returnable
+        data: returnable,
     };
 }

@@ -44,7 +44,7 @@
     };
 
     const showInfo = () => {
-        mouseText = "back";
+        mouseText = "Back";
         bgImage = false;
     };
 
@@ -63,14 +63,14 @@
         pageX = e.clientX;
         pageY = e.clientY;
         let box = window.getBoundingClientRect();
-        if (mouseText == "back") {
+        if (mouseText == "Back") {
             return;
         }
         if (e.clientX < box.width / 4 && e.clientY > box.height / 8 && e.clientY < box.height - box.height / 8) {
-            mouseText = "prev";
+            mouseText = "Prev";
             return;
         } else if (e.clientX > box.width - box.width / 4 && e.clientY > box.height / 8 && e.clientY < box.height - box.height / 8) {
-            mouseText = "next";
+            mouseText = "Next";
             return;
         } else if (e.clientY < box.height / 8) {
             mouseText = "*";
@@ -85,13 +85,13 @@
 
     let lightBoxed = false;
     const click = () => {
-        if (mouseText == "prev") {
+        if (mouseText == "Prev") {
             prev();
             return;
-        } else if (mouseText == "next") {
+        } else if (mouseText == "Next") {
             next();
             return;
-        } else if (mouseText == "back") {
+        } else if (mouseText == "Back") {
             back();
             return;
         } else if (Number(mouseText)) {
@@ -118,7 +118,7 @@
                 break;
             case "ArrowUp":
                 event.preventDefault();
-                if (mouseText == "back") {
+                if (mouseText == "Back") {
                     back();
                 } else {
                     showInfo();
@@ -126,7 +126,7 @@
                 break;
             case "ArrowDown":
                 event.preventDefault();
-                if (mouseText == "back") {
+                if (mouseText == "Back") {
                     back();
                 } else {
                     lightBoxed = !lightBoxed;
@@ -141,7 +141,7 @@
         var pageBgColour = "var(--defaultBgColour)";
         var pageTxtColour = "var(--defaultTxtColour)";
         var pageLinkColour = "var(--defaultHlColour)";
-        var pageLinkColourHover = "var(--defaultBgColour)";
+        var pageLinkColourHover = "var(--defaultHlTxtColour)";
         var pageLinkColourBgHover = "var(--defaultHlColour)";
         if ($forcedColours) {
             return `
@@ -184,7 +184,7 @@
             <div class="right">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                {#if mouseText != "back"}
+                {#if mouseText != "Back"}
                     <h1 on:click={showInfo} class="hoverer">info</h1>
                 {/if}
             </div>
@@ -195,7 +195,7 @@
             <ImageArea ImageData={data.data.album.pictures[$imageNum]} bgColour={!bgImage} {lightBoxed}></ImageArea>
             <!-- {/key} -->
         {/if}
-        {#if mouseText === "back"}
+        {#if mouseText === "Back"}
             <div class="info">
                 <div class="left">
                     <h1 on:click={() => goto("/")} class="hoverer">{$siteName}</h1>
@@ -203,7 +203,7 @@
                 </div>
                 <h1 class="desc">{moment(data.data.album.date).format("MMMM YY")}</h1>
                 <h1 class="desc">{data.data.album.location}</h1>
-                <h1 class="desc">{data.data.album.description}</h1>
+                <h1 class="desc datoText">{@html data.data.album.description}</h1>
             </div>
         {/if}
     </div>
@@ -282,7 +282,7 @@
         max-width: calc(100dvw - var(--largePadding));
         max-height: calc(100dvh - var(--largePadding));
         display: flex;
-        gap: var(--halfPadding);
+        gap: var(--quatPadding);
         flex-direction: column;
         overflow: auto;
         background-color: var(--pageBgColour);

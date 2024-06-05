@@ -29,9 +29,11 @@
 --bgColour:{siteConfig.defaultBgColour.hex};
 --txtColour:{siteConfig.defaultTxtColour.hex};
 --hlColour:{siteConfig.defaultHlColour.hex};
+--hoverColourTxt:{siteConfig.defaultHlTxtColour.hex};
 --defaultBgColour:{siteConfig.defaultBgColour.hex};
 --defaultTxtColour:{siteConfig.defaultTxtColour.hex};
 --defaultHlColour:{siteConfig.defaultHlColour.hex};
+--defaultHlTxtColour:{siteConfig.defaultHlTxtColour.hex};
 ">
     <slot ><!-- optional fallback --></slot>
     

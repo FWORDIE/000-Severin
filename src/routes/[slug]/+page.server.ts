@@ -34,7 +34,6 @@ export async function load({ params }) {
             }
           }
     `;
-    console.log(params.slug);
 
     const response = await fetch("https://graphql.datocms.com/", {
         method: "POST",

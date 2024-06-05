@@ -9,7 +9,6 @@ export interface alldatodata {
 export interface Data2 {
     allAlbums: Album[];
     siteConfig: SiteConfig;
-
 }
 
 export interface Data {
@@ -55,11 +54,13 @@ export interface Data3 {
 }
 
 export interface SiteConfig {
-    title:            string;
-    backLink:         string;
-    defaultBgColour:  DefaultColour;
+    title: string;
+    backLink: string;
+    defaultBgColour: DefaultColour;
     defaultTxtColour: DefaultColour;
-    defaultHlColour:  DefaultColour;
+    defaultHlColour: DefaultColour;
+    defaultHlTxtColour: DefaultColour;
+    indexBodyText: string;
     strictColours: boolean;
 }
 

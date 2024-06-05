@@ -1,5 +1,5 @@
 :root {
-    font-family: "CothamSans";
+    font-family: "texgyreheroscn";
     box-sizing: border-box;
     text-decoration: none;
     padding: 0px;
@@ -60,11 +60,11 @@ h1 {
 
 .hoverer {
     margin: calc(-1 * var(--quatPadding));
-    margin-top: calc(-1.25 * var(--quatPadding));
+    margin-top: calc(-0.5 * var(--quatPadding));
     margin-bottom: calc(-0.5 * var(--quatPadding));
 
     padding: calc(1 * var(--quatPadding));
-    padding-top: calc(1.25 * var(--quatPadding));
+    padding-top: calc(0.5 * var(--quatPadding));
     padding-bottom: calc(0.5 * var(--quatPadding));
     &:hover {
         color: var(--hoverColourTxt);
@@ -88,7 +88,37 @@ h1 {
     border-radius: 6px;
     border: 1px solid var(--bgColour);
 }
+@font-face {
+    font-family: "texgyreheroscn";
+    src: url("./texgyreheroscn-regular.woff2") format("woff2");
+    font-display: auto;
+    font-weight: 400;
+    font-stretch: normal;
+}
+@font-face {
+    font-family: "texgyreheroscn";
+    src: url("./texgyreheroscn-bold.woff2") format("woff2");
+    font-display: auto;
+    font-weight: 600;
+    font-stretch: normal;
+}
+@font-face {
+    font-family: "texgyreheroscn";
+    src: url("./texgyreheroscn-italic.woff2") format("woff2");
+    font-display: auto;
+    font-style: italic;
 
+    font-weight: 400;
+    font-stretch: normal;
+}
+@font-face {
+    font-family: "texgyreheroscn";
+    src: url("./texgyreheroscn-bolditalic.woff2") format("woff2");
+    font-display: auto;
+    font-style: italic;
+    font-weight: 600;
+    font-stretch: normal;
+}
 
 .follow {
     transition: all 50ms;
@@ -96,4 +126,32 @@ h1 {
     margin: 0px;
     pointer-events: none;
     color: var(--pageLinkColour);
+}
+
+.desc {
+    white-space: pre-wrap;
+    margin-right: var(--padding);
+}
+
+.datoText p {
+    margin: 0px;
+
+    a {
+        color: var(--hlColour);
+        text-decoration: none;
+        cursor: none;
+        display: inline-block;
+        margin: calc(-1 * var(--quatPadding));
+        margin-top: calc(-0.5 * var(--quatPadding));
+        margin-bottom: calc(-0.5 * var(--quatPadding));
+
+        padding: calc(1 * var(--quatPadding));
+        padding-top: calc(0.5 * var(--quatPadding));
+        padding-bottom: calc(0.5 * var(--quatPadding));
+        &:hover {
+            color: var(--hoverColourTxt);
+            background-color: var(--hoverColourBg);
+            // text-decoration: underline calc(0.1 * var(--padding));
+        }
+    }
 }
