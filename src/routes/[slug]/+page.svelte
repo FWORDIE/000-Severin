@@ -24,7 +24,7 @@
     var bgImage = true;
 
     onMount(() => {
-        $imageNum = Math.floor(random(0, numOfPictures));
+        $imageNum = 0;
     });
 
     const next = () => {
