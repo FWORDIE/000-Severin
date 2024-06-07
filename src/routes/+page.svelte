@@ -27,7 +27,7 @@
 
 <svelte:window on:mousemove={(e) => mousemovement(e)} />
 
-<div class="homescreen" style="">
+<div class="homescreen" class:forced={$forcedColours}>
     <div class="list">
         <h1 class="follow" style="position: absolute; top: {pageY}px; left: {pageX}px">*</h1>
 
@@ -41,10 +41,8 @@
                 on:mouseenter={() => background(index)}
                 on:mouseleave={hideBackground}
                 style="
-                --hoverColourBg: {!$forcedColours ? data.data.allAlbums[index].pictures[0].responsiveImage.bgColor : 'var(--defaultHlColour'};
-                --hoverColourTxt: {!$forcedColours
-                    ? pickTextColorBasedOnBgColorSimple(data.data.allAlbums[index].pictures[0].responsiveImage.bgColor)
-                    : 'var(--defaultHlTxtColour'};
+                --hoverColourBg:var(--defaultHlColour);
+                --hoverColourTxt: var(--defaultHlTxtColour);
                 "
             >
                 <h1 class="hoverer">/{album.title}</h1></a
@@ -71,6 +69,10 @@
         flex-direction: column;
         color: var(--txtColour);
         background-color: var(--bgColour);
+        &.forced {
+            color: var(--bgColour);
+            background-color: var(--txtColour);
+        }
         cursor: none;
         gap: var(--padding);
         h1 {
@@ -83,8 +85,6 @@
             margin: var(--padding);
             align-items: flex-start;
             gap: var(--quatPadding);
-
-
         }
         a {
             z-index: 2;

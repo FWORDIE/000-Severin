@@ -151,6 +151,14 @@
         --pageLinkColourHover: ${pageLinkColourHover};
         --pageLinkColourBgHover: ${pageLinkColourBgHover};
         `;
+        }else{
+            return `
+        --pageBgColour: ${pageTxtColour};
+        --pageTxtColour: ${pageBgColour};
+        --pageLinkColour: ${pageLinkColour};
+        --pageLinkColourHover: ${pageLinkColourHover};
+        --pageLinkColourBgHover: ${pageLinkColourBgHover};
+        `
         }
         const imageColour =  data.data.album.pictures[$imageNum] ? data.data.album.pictures[$imageNum].responsiveImage.bgColor : '#fff'
         pageLinkColour = lightBoxed || mouseText == 'back' ? imageColour : pickTextColorBasedOnBgColorSimple(imageColour) ;
