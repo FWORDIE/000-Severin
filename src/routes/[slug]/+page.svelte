@@ -193,7 +193,7 @@
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
                 {#if mouseText != "Back"}
-                    <h1 on:click={showInfo} class="hoverer">info</h1>
+                    <h1 on:click={showInfo} class="hoverer">Info</h1>
                 {/if}
             </div>
         </div>
